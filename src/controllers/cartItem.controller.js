@@ -9,7 +9,7 @@ async function getAllCartItems(req, res) {
 async function createCartItems(req, res) {
     const cartItem = new CartItem(req.body);
     await cartItem.save();
-    return res.send(cartItem)
+    return res.send(cartItem);
 }
 
 
