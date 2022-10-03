@@ -13,8 +13,6 @@ async function createCartItems(req, res) {
 }
 
 
-
-
 module.exports = {
     getAllCartItems,
     createCartItems,
