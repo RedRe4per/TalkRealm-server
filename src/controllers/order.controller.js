@@ -7,6 +7,8 @@ async function getAllOrders(req, res) {
 
 async function createOrder(req, res) {
     const order = new Order(req.body);
+    order.createdAt = new Date();
+    order.updatedAt = new Date();
     await order.save();
     return res.send(order);
 }
