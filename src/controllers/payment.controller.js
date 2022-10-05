@@ -9,16 +9,6 @@ async function createCheckoutSession(req, res) {
         return res.status(400).json({ error: 'missing required session parameters' })
     }
 
-    const paymentIntent = await stripeAPI.paymentIntents.create({
-        amount: 1099,
-        currency: 'aud',
-        payment_method_types: ['card'],
-        receipt_email: customer_email,
-    });
-
-    //console.log(paymentIntent)
-
-
     const session = await stripeAPI.checkout.sessions.create({
         payment_method_types: ['card'],  //'afterpay_clearpay'
         mode: 'payment',
