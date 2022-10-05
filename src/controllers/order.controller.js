@@ -1,7 +1,7 @@
 const Order = require('../models/order');
 
 async function getAllOrders(req, res) {
-    const orders = await Order.find().exec();
+    const orders = await Order.find().sort({createdAt: -1}).exec();
     return res.json(orders);
 }
 

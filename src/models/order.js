@@ -5,6 +5,10 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    isPaid: {
+        type: Boolean,
+        default: false
+    },
     items: [{
         quotation: {
             type: String,
