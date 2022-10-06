@@ -13,8 +13,14 @@ async function createOrder(req, res) {
     return res.send(order);
 }
 
+async function deleteAllOrders(req, res) {
+    const results = await Order.deleteMany();
+    return res.send(results);
+}
+
 
 module.exports = {
     getAllOrders,
     createOrder,
+    deleteAllOrders
 }
