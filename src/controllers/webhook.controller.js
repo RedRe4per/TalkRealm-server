@@ -24,7 +24,6 @@ const fulfillOrder = async (session) => {
     order.createdAt = new Date();
     order.updatedAt = new Date();
 
-    console.log(order);
     await order.save();
 }
 
