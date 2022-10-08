@@ -21,7 +21,6 @@ const fulfillOrder = async (session) => {
         }
     };
     order.isPaid = true;
-    order.createdAt = new Date();
     order.updatedAt = new Date();
 
     await order.save();

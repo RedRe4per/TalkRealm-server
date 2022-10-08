@@ -15,7 +15,8 @@ async function createCheckoutSession(req, res) {
         customer_email,
         metadata: {orderId: orderId},
         phone_number_collection: { enabled: true },
-        success_url: `${domainUrl}/success?session_id={CHECKOUT_SESSION_ID}`, //?session_id={CHECKOUT_SESSION_ID}
+        //success_url: `${domainUrl}/success?session_id={CHECKOUT_SESSION_ID}`, 
+        success_url: `${domainUrl}/success`, 
         cancel_url: `${domainUrl}/cancel`,
         billing_address_collection: 'required',
         //shipping_address_collection: { allowed_countries: ['AU'] },
