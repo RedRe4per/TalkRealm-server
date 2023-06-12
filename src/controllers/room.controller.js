@@ -4,7 +4,7 @@ const Joi = require('joi');
 const listAll = async (req, res) => {
   try {
     const rooms = await RoomService.listAll();
-    res.status(200).json(users);
+    res.status(200).json(rooms);
   } catch (error) {
     console.error('An error ocurred:', error);
     res.status(500).json(error);
@@ -15,7 +15,7 @@ const getById = async (req, res) => {
   const { id } = req.params;
   try {
     const room = await RoomService.getById(id);
-    res.status(200).json(user);
+    res.status(200).json(room);
   } catch (error) {
     console.error('Error fetching room:', error);
     res.status(500).json({ error: 'Could not fetch room' });

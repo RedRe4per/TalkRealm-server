@@ -1,6 +1,23 @@
 {
-  "script": {
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts",
+    "prettier": "prettier --write .",
+    "pre-commit": "npm run prettier && npm run lint",
+    "dev": "nodemon src/index.js",
     "start": "nodemon index.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "cors": "^2.8.5",
