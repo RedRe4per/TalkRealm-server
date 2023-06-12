@@ -1,4 +1,5 @@
 const Room = require("../models/room")
+const ChatService = require("./chat.service")
 const {getCurrentTimestamp} = require("../utils/time")
 
 const listAll = async () => {
@@ -13,7 +14,9 @@ const create = async (body) => {
     const room = new Room({
         ...body,
     });
-    room.save();
+    const chat = await ChatService.create({roomId: room.id});
+    room.chatId = chat.id;
+    await room.save();
 
     return room;
 };
