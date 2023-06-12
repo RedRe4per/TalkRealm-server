@@ -32,7 +32,6 @@ const schema = new mongoose.Schema({
     chatId: {
         type: mongoose.Types.ObjectId,
         ref: "Chat",
-        required: true,
     },
     roomName: {
         type: String,

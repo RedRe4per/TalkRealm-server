@@ -2,11 +2,11 @@ const Room = require("../models/room")
 const {getCurrentTimestamp} = require("../utils/time")
 
 const listAll = async () => {
-    return Room.find({isDeleted: false}).limit(50).exec();
+    return await Room.find({isDeleted: false}).limit(50).exec();
 };
 
 const getById = async (id) => {
-    return Room.findById(id);
+    return await Room.findById(id).exec();
 };
 
 const create = async (body) => {
@@ -28,7 +28,7 @@ const update = async (id, body) => {
 };
 
 const deleteById = async (id) => {
-    const room = Room.findByIdAndUpdate(
+    const room = await Room.findByIdAndUpdate(
         id,
         {
             isDeleted: true,
