@@ -1,10 +1,6 @@
 const Chat = require('../models/chat');
 const { getCurrentTimestamp } = require('../utils/time');
 
-const listAll = async () => {
-  return await Chat.find({ isDeleted: false }).limit(50).exec();
-};
-
 const getById = async (id) => {
   return await Chat.findById(id).exec();
 };
@@ -60,7 +56,6 @@ const deleteById = async (id) => {
 };
 
 module.exports = {
-  listAll,
   getById,
   create,
   update,

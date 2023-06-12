@@ -1,16 +1,6 @@
 const ChatService = require('../services/chat.service');
 const Joi = require('joi');
 
-const listAll = async (req, res) => {
-  try {
-    const chats = await ChatService.listAll();
-    res.status(200).json(chats);
-  } catch (error) {
-    console.error('An error ocurred:', error);
-    res.status(500).json(error);
-  }
-};
-
 const getById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -55,7 +45,6 @@ const deleteById = async (req, res) => {
 };
 
 module.exports = {
-  listAll,
   getById,
   create,
   update,
