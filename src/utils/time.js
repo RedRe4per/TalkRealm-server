@@ -3,5 +3,5 @@ const getCurrentTimestamp = () => {
 };
 
 module.exports = {
-  getCurrentTimestamp
-}
+  getCurrentTimestamp,
+};

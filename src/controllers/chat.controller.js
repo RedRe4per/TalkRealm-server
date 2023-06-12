@@ -1,4 +1,4 @@
-const ChatService = require("../services/chat.service")
+const ChatService = require('../services/chat.service');
 const Joi = require('joi');
 
 const listAll = async (req, res) => {
@@ -55,9 +55,9 @@ const deleteById = async (req, res) => {
 };
 
 module.exports = {
-    listAll,
-    getById,
-    create,
-    update,
-    deleteById,
-}
+  listAll,
+  getById,
+  create,
+  update,
+  deleteById,
+};

@@ -1,10 +1,10 @@
 const express = require('express');
-const { 
-    listAll,
-    getById,
-    create,
-    update,
-    deleteById,
+const {
+  listAll,
+  getById,
+  create,
+  update,
+  deleteById,
 } = require('../controllers/chat.controller');
 
 const chatRouter = express.Router();
