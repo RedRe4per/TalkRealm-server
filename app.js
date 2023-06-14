@@ -19,21 +19,23 @@ app.use(`/${process.env.ENVIRONMENT}`, router);
 
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-    //   origin: "http://localhost:3000", // Your client's URL
-      origin: "*",
-      methods: ["GET", "POST"]
-    }
-  });
-
-
-io.on('connection', (socket) => {
-    console.log('User connected');
-  
-    socket.on('disconnect', () => {
-      console.log('User disconnected');
-    });
+  cors: {
+    //   origin: "http://localhost:3000",
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
 });
 
-// module.exports = app;
+io.on('connection', (socket) => {
+  console.log('User connected');
+
+  socket.on('message', (message) => {
+    io.emit('message', message);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+  });
+});
+
 module.exports = server;
