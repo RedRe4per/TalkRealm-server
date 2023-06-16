@@ -37,12 +37,16 @@ io.on('connection', (socket) => {
 
   socket.on('answer', (answer) => {
     console.log('Answer received');
-    // TODO: 你需要决定将 answer 发送给谁，这里简单地将其发送给所有连接的客户端（除了发送者自己）
     socket.broadcast.emit('answer', answer);
   });
 
   socket.on('message', (message) => {
     io.emit('message', message);
+  });
+
+  socket.on('ice-candidate', (candidate) => {
+    console.log('Ice candidate received');
+    socket.broadcast.emit('ice-candidate', candidate);
   });
 
   socket.on('disconnect', () => {
