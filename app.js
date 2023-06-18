@@ -31,7 +31,6 @@ io.on('connection', (socket) => {
 
   socket.on('offer', (offer) => {
     console.log('Offer received');
-    // TODO: 你需要决定将 offer 发送给谁，这里简单地将其发送给所有连接的客户端（除了发送者自己）
     socket.broadcast.emit('offer', offer);
   });
 
