@@ -28,6 +28,7 @@
     "mongoose": "^6.6.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
+    "peerjs": "^1.4.7",
     "socket.io": "^4.6.2"
   },
   "devDependencies": {

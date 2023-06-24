@@ -29,24 +29,14 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log('User connected');
 
-  socket.on('offer', (offer) => {
-    console.log('Offer received');
-    socket.broadcast.emit('offer', offer);
-  });
-
-  socket.on('answer', (answer) => {
-    console.log('Answer received');
-    socket.broadcast.emit('answer', answer);
-  });
-
   socket.on('message', (message) => {
     io.emit('message', message);
   });
 
-  socket.on('ice-candidate', (candidate) => {
-    console.log('Ice candidate received');
-    socket.broadcast.emit('ice-candidate', candidate);
-  });
+  socket.on('join-room', (roomId, userId) => {
+    socket.join(roomId);
+    socket.to(roomId).broadcast.emit('user-connected', userId)
+  })
 
   socket.on('disconnect', () => {
     console.log('User disconnected');
