@@ -25,12 +25,14 @@ const io = new Server(server, {
   },
 });
 
+let users = [];
+
 io.on('connection', (socket) => {
   console.log('User connected');
 
   socket.on('message', (message) => {
-    console.log("hello")
-    io.emit('message', "message");
+    console.log('hello');
+    io.emit('message', 'message');
   });
 
   // socket.on('join-room', (userId) => {
@@ -40,13 +42,34 @@ io.on('connection', (socket) => {
   // })
 
   socket.on('I-connected', (userId) => {
-    console.log("user", userId, "connected")
+    console.log('User connected', userId);
+    users.push(userId);
     //socket.join(roomId2);
-    socket.broadcast.emit('user-connected', userId) //to(roomId)
-  })
+    socket.broadcast.emit('user-connected', { userId: userId, users: users }); //to(roomId)
+
+    socket.on('disconnect', () => {
+      console.log('User disconnected', userId);
+      const index = users.indexOf(userId);
+      if (index > -1) {
+        users.splice(index, 1);
+      }
+      socket.broadcast.emit('user-disconnected', {
+        userId: userId,
+        users: users,
+      });
+    });
+  });
 
   socket.on('I-disconnect', (userId) => {
     console.log('User disconnected', userId);
+    const index = users.indexOf(userId);
+    if (index > -1) {
+      users.splice(index, 1);
+    }
+    socket.broadcast.emit('user-disconnected', {
+      userId: userId,
+      users: users,
+    });
   });
 });
 

@@ -2,7 +2,7 @@ name: Node.js CI/CD
 
 on:
   push:
-    branches: [ lost ] 
+    branches: [lost]
 
 jobs:
   build:
@@ -20,11 +20,11 @@ jobs:
         run: npm ci
 
       - name: Run Tests
-        run: npm test 
+        run: npm test
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.8.8 # This action deploys to Heroku
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "talkrealm-server" #Must be unique in Heroku
-          heroku_email: "gn003kyrio@gmail.com"
+          heroku_app_name: 'talkrealm-server' #Must be unique in Heroku
+          heroku_email: 'gn003kyrio@gmail.com'
