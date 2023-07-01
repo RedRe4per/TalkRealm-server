@@ -1,0 +1,30 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches: [ lost ] 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Tests
+        run: npm test 
+
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.8.8 # This action deploys to Heroku
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "talkrealm-server" #Must be unique in Heroku
+          heroku_email: "gn003kyrio@gmail.com"

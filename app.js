@@ -29,16 +29,24 @@ io.on('connection', (socket) => {
   console.log('User connected');
 
   socket.on('message', (message) => {
-    io.emit('message', message);
+    console.log("hello")
+    io.emit('message', "message");
   });
 
-  socket.on('join-room', (roomId, userId) => {
-    socket.join(roomId);
-    socket.to(roomId).broadcast.emit('user-connected', userId)
+  // socket.on('join-room', (userId) => {
+  //   console.log("first11111")
+  //   //socket.join(roomId);
+  //   socket.broadcast.emit('user-connected', userId) //to(roomId)
+  // })
+
+  socket.on('I-connected', (userId) => {
+    console.log("user", userId, "connected")
+    //socket.join(roomId);
+    socket.broadcast.emit('user-connected', userId) //to(roomId)
   })
 
-  socket.on('disconnect', () => {
-    console.log('User disconnected');
+  socket.on('I-disconnect', (userId) => {
+    console.log('User disconnected', userId);
   });
 });
 
