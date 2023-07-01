@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
 
   socket.on('I-connected', (userId) => {
     console.log("user", userId, "connected")
-    //socket.join(roomId);
+    //socket.join(roomId2);
     socket.broadcast.emit('user-connected', userId) //to(roomId)
   })
 
