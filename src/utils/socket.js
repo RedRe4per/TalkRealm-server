@@ -49,6 +49,11 @@ module.exports = function (server) {
       });
     });
 
+    socket.on('camera-close', (outgoingIds) => {
+      console.log('outgoingIds', outgoingIds);
+      socket.broadcast.emit('remote-camera-close', outgoingIds);
+    });
+
     socket.on('I-disconnect', (userId) => {
       console.log('User disconnected', userId);
       const index = users.findIndex((user) => user.userPeerId === userId);
