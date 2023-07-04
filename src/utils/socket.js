@@ -2,6 +2,7 @@ const { Server } = require('socket.io');
 
 let users = [];
 
+
 module.exports = function (server) {
   const io = new Server(server, {
     cors: {
@@ -50,8 +51,15 @@ module.exports = function (server) {
     });
 
     socket.on('camera-close', (outgoingIds) => {
-      console.log('outgoingIds', outgoingIds);
       socket.broadcast.emit('remote-camera-close', outgoingIds);
+    });
+
+    socket.on('voice-on', (peerId) => {
+      socket.broadcast.emit('remote-voice-on', peerId);
+    });
+
+    socket.on('voice-off', (peerId) => {
+      socket.broadcast.emit('remote-voice-off', peerId);
     });
 
     socket.on('I-disconnect', (userId) => {
