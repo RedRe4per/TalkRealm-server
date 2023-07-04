@@ -1,7 +1,6 @@
 const { Server } = require('socket.io');
-
+const { voiceSwitch } = require('./voiceSwitch');
 let users = [];
-
 
 module.exports = function (server) {
   const io = new Server(server, {
@@ -56,10 +55,12 @@ module.exports = function (server) {
 
     socket.on('voice-on', (peerId) => {
       socket.broadcast.emit('remote-voice-on', peerId);
+      voiceSwitch(users, 'on', peerId);
     });
 
     socket.on('voice-off', (peerId) => {
       socket.broadcast.emit('remote-voice-off', peerId);
+      voiceSwitch(users, 'off', peerId);
     });
 
     socket.on('I-disconnect', (userId) => {
