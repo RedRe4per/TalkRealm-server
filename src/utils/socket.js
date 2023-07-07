@@ -28,11 +28,31 @@ module.exports = function (server) {
       console.log('User connected', userObj.userPeerId);
       users.push(userObj);
       //socket.join(roomId2);
-      socket.broadcast.emit('user-connected', {
-        userObj: userObj,
-        users: users,
-      }); //to(roomId)
-      socket.emit('user-connected', { userObj: userObj, users: users });
+      // socket.broadcast.emit('user-connected', {
+      //   userObj: userObj,
+      //   users: users,
+      // }); //to(roomId)
+      // socket.emit('user-connected', { userObj: userObj, users: users });
+      
+
+      socket.on('findVoiceOn', (peerId) => {
+        socket.broadcast.emit('user-connected', {
+          userObj: userObj,
+          users: users,
+        }); //to(roomId)
+        socket.emit('user-connected', { userObj: userObj, users: users });
+        users.forEach((userObj)=>{
+        if(userObj.voice){
+          socket.broadcast.emit('user-connected', {
+            userObj: userObj,
+            users: users,
+          }); //to(roomId)
+          socket.emit('user-connected', { userObj: userObj, users: users });
+          socket.emit('remote-voice-on', userObj.userPeerId);
+        }
+      })
+      })
+
 
       socket.on('disconnect', () => {
         console.log('User disconnected', userObj);
