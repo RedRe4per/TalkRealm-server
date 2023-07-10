@@ -14,7 +14,6 @@ module.exports = function (server) {
     console.log('User connected');
 
     socket.on('message', (message) => {
-      console.log('hello');
       io.emit('message', 'message');
     });
 
@@ -55,7 +54,6 @@ module.exports = function (server) {
 
 
       socket.on('disconnect', () => {
-        console.log('User disconnected', userObj);
         const index = users.findIndex(
           (user) => user.userPeerId === userObj.userPeerId,
         );
@@ -84,7 +82,6 @@ module.exports = function (server) {
     });
 
     socket.on('I-disconnect', (userId) => {
-      console.log('User disconnected', userId);
       const index = users.findIndex((user) => user.userPeerId === userId);
       if (index > -1) {
         users.splice(index, 1);
