@@ -1,6 +1,6 @@
 const { Server } = require('socket.io');
-const { voiceSwitch } = require('./voiceSwitch');
-let users = [];
+const { stateSwitch } = require('./stateSwitch');
+let channelUsers = [];
 
 module.exports = function (server) {
   const io = new Server(server, {
@@ -25,70 +25,71 @@ module.exports = function (server) {
 
     socket.on('I-connected', (userObj) => {
       console.log('User connected', userObj.userPeerId);
-      users.push(userObj);
+      channelUsers.push(userObj);
       //socket.join(roomId2);
-      // socket.broadcast.emit('user-connected', {
-      //   userObj: userObj,
-      //   users: users,
-      // }); //to(roomId)
-      // socket.emit('user-connected', { userObj: userObj, users: users });
-      
-
-      socket.on('findVoiceOn', (peerId) => {
-        socket.broadcast.emit('user-connected', {
-          userObj: userObj,
-          users: users,
-        }); //to(roomId)
-        socket.emit('user-connected', { userObj: userObj, users: users });
-        users.forEach((userObj)=>{
-        if(userObj.voice){
-          socket.broadcast.emit('user-connected', {
-            userObj: userObj,
-            users: users,
-          }); //to(roomId)
-          socket.emit('user-connected', { userObj: userObj, users: users });
-          socket.emit('remote-voice-on', userObj.userPeerId);
-        }
-      })
-      })
-
+      socket.broadcast.emit('user-connected', {
+        userObj: userObj,
+        channelUsers: channelUsers,
+      }); //to(roomId)
+      socket.emit('user-connected', {
+        userObj: userObj,
+        channelUsers: channelUsers,
+      });
 
       socket.on('disconnect', () => {
-        const index = users.findIndex(
+        const index = channelUsers.findIndex(
           (user) => user.userPeerId === userObj.userPeerId,
         );
         if (index > -1) {
-          users.splice(index, 1);
+          channelUsers.splice(index, 1);
         }
         socket.broadcast.emit('user-disconnected', {
           userObj: userObj,
-          users: users,
+          channelUsers: channelUsers,
         });
       });
     });
 
-    socket.on('camera-close', (outgoingIds) => {
-      socket.broadcast.emit('remote-camera-close', outgoingIds);
+    socket.on('video-on', (peerId) => {
+      socket.broadcast.emit('remote-video-on', peerId);
+      stateSwitch(channelUsers, 'video', 'on', peerId);
     });
 
-    socket.on('voice-on', (peerId) => {
-      socket.broadcast.emit('remote-voice-on', peerId);
-      voiceSwitch(users, 'on', peerId);
+    socket.on('video-off', (peerId) => {
+      socket.broadcast.emit('remote-video-off', peerId);
+      stateSwitch(channelUsers, 'video', 'off', peerId);
     });
 
-    socket.on('voice-off', (peerId) => {
-      socket.broadcast.emit('remote-voice-off', peerId);
-      voiceSwitch(users, 'off', peerId);
+    socket.on('audio-on', (peerId) => {
+      socket.broadcast.emit('remote-audio-on', peerId);
+      stateSwitch(channelUsers, 'audio', 'on', peerId);
+    });
+
+    socket.on('audio-off', (peerId) => {
+      socket.broadcast.emit('remote-audio-off', peerId);
+      stateSwitch(channelUsers, 'audio', 'off', peerId);
+    });
+
+    socket.on('screen-on', (peerId) => {
+      socket.broadcast.emit('remote-screen-on', peerId);
+      stateSwitch(channelUsers, 'screen', 'on', peerId);
+    });
+
+    socket.on('screen-off', (peerId) => {
+      socket.broadcast.emit('remote-screen-off', peerId);
+      stateSwitch(channelUsers, 'screen', 'off', peerId);
     });
 
     socket.on('I-disconnect', (userId) => {
-      const index = users.findIndex((user) => user.userPeerId === userId);
+      const index = channelUsers.findIndex(
+        (user) => user.userPeerId === userId,
+      );
       if (index > -1) {
-        users.splice(index, 1);
+        channelUsers.splice(index, 1);
       }
       socket.broadcast.emit('user-disconnected', {
         userId: userId,
-        users: users,
+        channelUsers: channelUsers,
       });
     });
   });

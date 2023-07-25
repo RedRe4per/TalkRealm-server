@@ -1,7 +1,7 @@
-const voiceSwitch = (users, voice, peerId) => {
+const stateSwitch = (channelUsers, attribute, boolean, peerId) => {
   let state;
 
-  switch (voice) {
+  switch (boolean) {
     case 'on':
       state = true;
       break;
@@ -9,17 +9,17 @@ const voiceSwitch = (users, voice, peerId) => {
       state = false;
       break;
     default:
-      console.error(`Invalid voice state: ${voice}`);
+      console.error(`Invalid state: ${voice}`);
       return;
   }
 
-  users.forEach((user) => {
+  channelUsers.forEach((user) => {
     if (user.userPeerId === peerId) {
-      user.voice = state;
+      user[attribute] = state;
     }
   });
 };
 
 module.exports = {
-  voiceSwitch,
+  stateSwitch,
 };
